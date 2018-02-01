@@ -7,7 +7,6 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // This comment is not in master
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }

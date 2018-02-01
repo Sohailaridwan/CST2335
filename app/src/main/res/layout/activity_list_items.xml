@@ -5,37 +5,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.sohaila.androidlabs.ListItemsActivity"
+    android:layout_height="wrap_content"
     android:columnCount="2"
     android:rowCount="2">
+
 
     <RadioButton android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
-        android:text="@string/RadioButton" />
+        android:text="RadioButton" />
 
     <CheckBox android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
-        android:text="@string/CheckBox_message"/>
-
+        android:text="CheckBox"/>
 
     <Switch android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
-        android:text="@string/What_does_it_do"/>
+        android:text="What does this do?"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnWeight="1"
-        android:layout_gravity="fill_horizontal"
-        android:contentDescription="@string/What_does_it_do"
-        android:src="@android:drawable/ic_menu_camera"
-        android:text="@string/image_to_display"/>
+        android:layout_gravity="fill"
+        android:src="@android:drawable/ic_menu_camera"/>
 
 </GridLayout>

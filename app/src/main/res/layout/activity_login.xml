@@ -12,22 +12,21 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_message"
-        tools:text="Login"/>
+        android:text="@string/login" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/login_name"
+        android:hint="@string/login_hint"
         android:inputType="textEmailAddress"/>
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/password_message"/>
+        android:text="@string/password"/>
 
     <EditText
         android:id="@+id/editText2"
@@ -39,6 +38,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/flag"/>
+        android:src="@drawable/flag"/>
+
 
 </LinearLayout>
