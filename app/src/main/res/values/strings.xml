@@ -2,8 +2,17 @@
     <string name="app_name">Lab1</string>
     <string name="hello_message">Hello World!</string>
     <string name="ButtonText">I\'m a button!</string>
-    <string name="login">login</string>
     <string name="login_hint">login name</string>
-    <string name="password">password</string>
 
+    <string name="loginhinttext">login name</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="buttonlogin">Login</string>
+
+    <string name="btn1Text">Radio Button</string>
+    <string name="btn2Text">Button 2</string>
+    <string name="SwitchText">Enable Something</string>
+
+    <string name="login_default">example@domain.com</string>
+    <string name="login_key">Default Email</string>
 </resources>
