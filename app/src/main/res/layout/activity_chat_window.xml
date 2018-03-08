@@ -16,6 +16,7 @@
         android:layout_above="@+id/chat_send_btn">
 
     </ListView>
+
     <EditText
         android:id="@+id/chat_edit_text"
         android:layout_width="wrap_content"

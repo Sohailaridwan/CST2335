@@ -43,8 +43,6 @@ public class ChatWindow extends Activity {
                 message_adapter.notifyDataSetChanged();
             }
         });
-
-
     }
 
     private class ChatAdapter extends ArrayAdapter<String> {
@@ -79,5 +77,4 @@ public class ChatWindow extends Activity {
             return position;
         }
     }
-
 }
