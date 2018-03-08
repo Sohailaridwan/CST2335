@@ -16,6 +16,10 @@
 
     <string name="login_default">example@domain.com</string>
     <string name="login_key">Email par défaut</string>
+
+    <string name="start_chat_text">Démarrer la conversation</string>
+    <string name="edit_chat_text">Modifier la conversation</string>
+    <string name="chat_send_text">Envoyer</string>
 </resources>
 
 

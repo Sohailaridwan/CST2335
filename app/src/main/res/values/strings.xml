@@ -15,4 +15,8 @@
 
     <string name="login_default">example@domain.com</string>
     <string name="login_key">Default Email</string>
+
+    <string name="start_chat_text">Start Chat</string>
+    <string name="edit_chat_text">Edit Chat</string>
+    <string name="chat_send_text">Send</string>
 </resources>
