@@ -1,7 +1,9 @@
 package com.example.sohaila.androidlabs;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,13 +23,17 @@ public class ChatWindow extends Activity {
     ListView chat_listview;
     EditText chat_edit_text;
     Button chat_send_btn;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_window);
 
-        chat_messages = new ArrayList<String>();
+        ChatDatabaseHelper dbHelper = new ChatDatabaseHelper(ChatWindow.this);
+        db = dbHelper.getWritableDatabase();
+
+        chat_messages = dbHelper.getAllMessages(db);
         chat_listview = (ListView) findViewById(R.id.chatlist);
         chat_edit_text = (EditText) findViewById(R.id.chat_edit_text);
         chat_send_btn = (Button) findViewById(R.id.chat_send_btn);
@@ -39,10 +45,24 @@ public class ChatWindow extends Activity {
             @Override
             public void onClick(View view) {
                 chat_messages.add(chat_edit_text.getText().toString());
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(ChatDatabaseHelper.COLUMN_MESSAGE, chat_edit_text.getText().toString());
+                db.insert(ChatDatabaseHelper.TABLE_MESSAGES, "", contentValues);
+
                 chat_edit_text.setText("");
                 message_adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        try {
+            db.close();
+        } catch (Exception e) {
+        }
     }
 
     private class ChatAdapter extends ArrayAdapter<String> {
