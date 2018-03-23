@@ -24,4 +24,13 @@
         android:layout_height="wrap_content"
         android:text="@string/start_chat_text" />
 
+    <Button
+        android:id="@+id/button_Weather_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/weather_forecast"
+        android:layout_below="@+id/buttonChat"
+        android:layout_alignParentStart="true" />
+
 </LinearLayout>

@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.example.sohaila.androidlabs.WeatherForecast;
 
 public class StartActivity extends Activity {
 
     protected static final String ACTIVITY_NAME = "StartActivity";
+    Button weatherButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class StartActivity extends Activity {
                 startActivity(intent);
             }
         });
+        onClickWeather();
     }
 
     @Override
@@ -79,5 +82,17 @@ public class StartActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(ACTIVITY_NAME, "In onDestroy()");
+    }
+
+    public void onClickWeather(){
+        weatherButton = (Button)findViewById(R.id.button_Weather_forecast);
+        weatherButton.setOnClickListener(new View.OnClickListener(){
+                                             @Override
+                                             public void onClick(View v){
+                                                 Intent intent = new Intent(StartActivity.this, WeatherForecast.class);
+                                                 startActivity(intent);
+                                             }
+                                         }
+        );
     }
 }
