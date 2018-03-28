@@ -19,10 +19,12 @@
     <string name="start_chat_text">Start Chat</string>
     <string name="edit_chat_text">Edit Chat</string>
     <string name="chat_send_text">Send</string>
+
     <string name="weather_forecast">  Weather Forecast </string>
     <string name="cur_temp">Current Temperature </string>
     <string name="min_temp">Minimum Temperature </string>
-    <string name="max_temp">maximum Temperature </string>
+    <string name="max_temp">Maximum Temperature </string>
+    <string name="wind_spd">Wind Speed </string>
     <string name="weatherImage">A weather related image</string>
 
 </resources>

@@ -14,13 +14,13 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="162dp"
         android:layout_height="wrap_content"
-        android:text="@string/ButtonText"/>
+        android:text="@string/ButtonText" />
 
     <Button
         android:id="@+id/start_chat_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:text="@string/start_chat_text" />
 

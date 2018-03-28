@@ -32,6 +32,7 @@ public class WeatherForecast extends Activity {
     private TextView minTemp;
     private TextView maxTemp;
     private TextView curTemp;
+    private TextView windSpeed;
     private ImageView weatherImage;
 
 
@@ -44,6 +45,7 @@ public class WeatherForecast extends Activity {
         minTemp = (TextView)findViewById(R.id.min_temperature);
         maxTemp = (TextView)findViewById(R.id.max_temperature);
         curTemp = (TextView)findViewById(R.id.current_temperature);
+        windSpeed = (TextView)findViewById(R.id.wind_speed);
         weatherImage = (ImageView)findViewById(R.id.imageView2);
 
         ForecastQuery forecast = new ForecastQuery();
@@ -92,6 +94,7 @@ public class WeatherForecast extends Activity {
 
         String min;
         String max;
+        String winds;
         String currentTemp;
         String iconName;
         Bitmap icon;
@@ -132,6 +135,10 @@ public class WeatherForecast extends Activity {
                         publishProgress(75);
 
                     }
+                    if(parser.getName().equals("speed")){
+                        winds = parser.getAttributeValue(null, "value");
+                        publishProgress(75);
+                    }
                     if(parser.getName().equals("weather")){
                         iconName = parser.getAttributeValue(null, "icon");
                         String iconFile = iconName + ".png";
@@ -145,6 +152,7 @@ public class WeatherForecast extends Activity {
                             icon = BitmapFactory.decodeStream(inputStream);
                             Log.i(TAG, "image file exists already");
                         }
+
                         else{
                             URL ImageURL = new URL("http://openweathermap.org/img/w/" + iconName + ".png");
                             icon  = getImage(ImageURL);
@@ -183,6 +191,7 @@ public class WeatherForecast extends Activity {
             curTemp.setText(curTemp.getText()+ currentTemp + degree + "C");
             minTemp.setText(minTemp.getText() + min + degree + "C");
             maxTemp.setText(maxTemp.getText()+ max + degree + "C");
+            windSpeed.setText(windSpeed.getText()+ winds + "KM/H");
             weatherImage.setImageBitmap(icon);
             progressBar.setVisibility(View.INVISIBLE);
         }
