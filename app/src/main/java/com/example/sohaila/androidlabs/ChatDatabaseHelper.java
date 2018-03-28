@@ -5,15 +5,25 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
+import android.content.ContentValues;
+import android.content.Context;
 import java.util.ArrayList;
 
 public class ChatDatabaseHelper extends SQLiteOpenHelper {
+    public static final String CHAT_TABLE = "CHAT_TABLE";
+    public static final String KEY_ID = "_id";
+    public static final String KEY_MESSAGE = "Message";
+    // string array which will return the chat table fields
+    public static final String[] CHAT_FIELDS = new String[]{
+            KEY_ID,
+            KEY_MESSAGE
+    };
+
 
     protected static final String ACTIVITY_NAME = "ChatDatabaseHelper";
 
     private static String DATABASE_NAME = "messages.db";
-    private static int VERSION_NUM = 3;
+    private static int VERSION_NUM = 4;
 
     public static final String TABLE_MESSAGES = "messages";
     public static final String COLUMN_ID = "id";
@@ -26,6 +36,8 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
             + TABLE_MESSAGES + "( " + COLUMN_ID
             + " integer primary key autoincrement, " + COLUMN_MESSAGE
             + " text not null);";
+    Context context;
+    SQLiteDatabase mdb;
 
     public ChatDatabaseHelper(Context ctx){
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
@@ -42,6 +54,45 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGES);
         onCreate(sqLiteDatabase);
         Log.i(ACTIVITY_NAME, "Calling onUpgrade, oldVersion=" + oldVersion + " newVersion=" + newVersion);
+    }
+    // open database
+    public ChatDatabaseHelper open() {
+        if(mdb == null){
+            mdb = getWritableDatabase();
+        }
+
+        return this;
+    }
+
+    public void close(){
+        if(mdb != null){
+            mdb.close();
+        }
+    }
+
+    // retrieving data
+    public Cursor getChatMessages(){
+        return mdb.query(CHAT_TABLE, CHAT_FIELDS, null, null, null, null, null);
+    }
+
+    public String getMessageFromCursor(Cursor cursor){
+        String msg = cursor.getString(cursor.getColumnIndex(KEY_MESSAGE));
+        return msg;
+    }
+
+
+    public int getIdFromCursor(Cursor cursor){
+        int id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+        return id;
+    }
+
+    public void insert(ContentValues content){
+        mdb.insert(CHAT_TABLE, null, content);
+    }
+
+    public void remove(long id){
+        int deletedRecrod =  mdb.delete(CHAT_TABLE, "_id" + "=" + id, null);
+        Log.i("Deleted ",Integer.toString(deletedRecrod));
     }
 
     public ArrayList<String> getAllMessages(SQLiteDatabase db){
