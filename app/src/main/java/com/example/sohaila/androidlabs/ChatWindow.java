@@ -79,15 +79,15 @@ public class ChatWindow extends Activity {
         chatHelper.open();
         cursor = chatHelper.getChatMessages();
 
-        if(cursor.moveToFirst()){
-            do{
-                String msg = chatHelper.getMessageFromCursor(cursor);
-                Log.i(ACTIVITY_NAME, "SQL Message: " +  msg);
-                Log.i(ACTIVITY_NAME, "Cursor's column count=" + cursor.getColumnCount());
-                cursor.moveToNext();
-            }while(!cursor.isAfterLast());
-            messageAdapter.notifyDataSetChanged();
-        }
+//        if(cursor.moveToFirst()){
+//            do{
+//                String msg = chatHelper.getMessageFromCursor(cursor);
+//                Log.i(ACTIVITY_NAME, "SQL Message: " +  msg);
+//                Log.i(ACTIVITY_NAME, "Cursor's column count=" + cursor.getColumnCount());
+//                cursor.moveToNext();
+//            }while(!cursor.isAfterLast());
+//            messageAdapter.notifyDataSetChanged();
+//        }
 
         for (int i=0; i<cursor.getColumnCount(); i++) {
             Log.i(ACTIVITY_NAME, cursor.getColumnName(i));
@@ -142,6 +142,7 @@ public class ChatWindow extends Activity {
                 db.insert(ChatDatabaseHelper.TABLE_MESSAGES, "", contentValues);
 
                 chat_edit_text.setText("");
+                cursor = chatHelper.getChatMessages();
                 messageAdapter.notifyDataSetChanged();
             }
         });
