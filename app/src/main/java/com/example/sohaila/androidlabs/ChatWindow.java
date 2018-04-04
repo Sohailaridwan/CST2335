@@ -1,6 +1,7 @@
 package com.example.sohaila.androidlabs;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import android.util.Log;
 import android.database.Cursor;
 import android.content.Intent;
+import android.widget.Toast;
+
 public class ChatWindow extends Activity {
 
     protected static final String ACTIVITY_NAME = "ChatWindow";
@@ -26,7 +30,6 @@ public class ChatWindow extends Activity {
     FrameLayout frameLayout;
     String TAG = "activity_chat_window.xml";
     ArrayList<String> chat_messages;
-    ArrayList <String> storeChat = new ArrayList <String>();
     ListView chat_listview;
     EditText chat_edit_text;
     Button chat_send_btn;
@@ -36,6 +39,7 @@ public class ChatWindow extends Activity {
     ChatDatabaseHelper chatHelper;
     ContentValues newValues = new ContentValues();
     Cursor cursor;
+    ChatWindow myActivity;
     ChatAdapter messageAdapter;
     Button sendBtn;
     EditText editTxt;
@@ -52,7 +56,7 @@ public class ChatWindow extends Activity {
         chat_listview = (ListView) findViewById(R.id.chatlist);
         chat_edit_text = (EditText) findViewById(R.id.chat_edit_text);
         chat_send_btn = (Button) findViewById(R.id.chat_send_btn);
-        frameLayout = (FrameLayout)findViewById(R.id.entryType);
+        frameLayout = (FrameLayout)findViewById(R.id.chatlist_frameview);
 
         //phone layout use:
         if(frameLayout == null){
@@ -65,16 +69,12 @@ public class ChatWindow extends Activity {
             isTab = true;
         }
 
-        final ListView list = (ListView)findViewById(R.id.chatlist);
         messageAdapter = new ChatAdapter( this );
-        list.setAdapter (messageAdapter);
-        editTxt = (EditText)findViewById(R.id.chat_edit_text);
-        sendBtn = (Button)findViewById(R.id.chat_send_btn);
+        chat_listview.setAdapter (messageAdapter);
 
         chatHelper = new ChatDatabaseHelper(ChatWindow.this);
         //SQLiteDatabase chatDB = chatHelper.getMdb();
         newValues = new ContentValues();
-
 
         chatHelper.open();
         cursor = chatHelper.getChatMessages();
@@ -84,20 +84,53 @@ public class ChatWindow extends Activity {
                 String msg = chatHelper.getMessageFromCursor(cursor);
                 Log.i(ACTIVITY_NAME, "SQL Message: " +  msg);
                 Log.i(ACTIVITY_NAME, "Cursor's column count=" + cursor.getColumnCount());
-                storeChat.add(msg);
                 cursor.moveToNext();
             }while(!cursor.isAfterLast());
             messageAdapter.notifyDataSetChanged();
-
         }
 
         for (int i=0; i<cursor.getColumnCount(); i++) {
             Log.i(ACTIVITY_NAME, cursor.getColumnName(i));
         }
 
+        myActivity = this;
 
-        final ChatAdapter message_adapter = new ChatAdapter(this);
-        chat_listview.setAdapter(message_adapter);
+        chat_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+
+            public void onItemClick(AdapterView<?> parentAdapter, View view, int position, long id) {
+
+                Object o = messageAdapter.getItem(position);
+
+                String s = (String)o;
+
+                Toast.makeText(getBaseContext(),s, Toast.LENGTH_SHORT).show();
+                if(isTab){
+                    // if the app is running on a tablet
+                    MessageFragment fragment = new MessageFragment();
+                    //   fragment.setChatWindow(ownActivity);
+                    fragment.setChatWindow(myActivity);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("chatMsg", s);
+                    bundle.putInt("Id",position);
+                    //bundle.putLong("dbId",id);
+                    fragment.setArguments(bundle);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.chatlist_frameview, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+                /* sending the activity to the newly created MessageDetails class */
+                else{
+                    Intent intent = new Intent(getApplicationContext(), MessageDetails.class);
+                    intent.putExtra("chatMsg",s);
+                    intent.putExtra("Id", position);
+                    //intent.putExtra("dbId",id);
+                    startActivityForResult(intent, 10);
+                }
+            }
+        });
 
         chat_send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +142,7 @@ public class ChatWindow extends Activity {
                 db.insert(ChatDatabaseHelper.TABLE_MESSAGES, "", contentValues);
 
                 chat_edit_text.setText("");
-                message_adapter.notifyDataSetChanged();
+                messageAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -121,17 +154,17 @@ public class ChatWindow extends Activity {
             //deleteBDid = bundle.getLong("deleteDBMsgId");
             deleteBDid = messageAdapter.getItemId(deleteId);
             chatHelper.remove(deleteBDid);
-            storeChat.remove(deleteId);
+            chat_messages.remove(deleteId);
             cursor = chatHelper.getChatMessages();
             messageAdapter.notifyDataSetChanged();
-            //deleteMessage(deleteId);
-            //Log.i(String.valueOf(ChatWindow.this), String.valueOf(chatList.size()));
+//            deleteMessage(deleteId);
+            Log.i(String.valueOf(ChatWindow.this), String.valueOf(chat_messages.size()));
         }
     }
     public void deleteMessage(int id){
         long deleteDBIdTab = messageAdapter.getItemId(id);
         chatHelper.remove(deleteDBIdTab);
-        storeChat.remove(id);
+        chat_messages.remove(id);
         messageAdapter.notifyDataSetChanged();
     }
 
@@ -173,8 +206,9 @@ public class ChatWindow extends Activity {
             return result;
         }
 
-        public long getId(int position){
-            return position;
+        public long getItemId(int position){
+            cursor.moveToPosition(position);
+            return chatHelper.getIdFromCursor(cursor);
         }
     }
 }

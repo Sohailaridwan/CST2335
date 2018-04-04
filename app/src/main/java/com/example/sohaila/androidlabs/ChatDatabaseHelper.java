@@ -10,9 +10,9 @@ import android.content.Context;
 import java.util.ArrayList;
 
 public class ChatDatabaseHelper extends SQLiteOpenHelper {
-    public static final String CHAT_TABLE = "CHAT_TABLE";
-    public static final String KEY_ID = "_id";
-    public static final String KEY_MESSAGE = "Message";
+    public static final String CHAT_TABLE = "messages";
+    public static final String KEY_ID = "id";
+    public static final String KEY_MESSAGE = "message";
     // string array which will return the chat table fields
     public static final String[] CHAT_FIELDS = new String[]{
             KEY_ID,
@@ -23,7 +23,7 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
     protected static final String ACTIVITY_NAME = "ChatDatabaseHelper";
 
     private static String DATABASE_NAME = "messages.db";
-    private static int VERSION_NUM = 4;
+    private static int VERSION_NUM = 5;
 
     public static final String TABLE_MESSAGES = "messages";
     public static final String COLUMN_ID = "id";
@@ -81,8 +81,8 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int getIdFromCursor(Cursor cursor){
-        int id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+    public long getIdFromCursor(Cursor cursor){
+        long id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
         return id;
     }
 
@@ -91,7 +91,7 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void remove(long id){
-        int deletedRecrod =  mdb.delete(CHAT_TABLE, "_id" + "=" + id, null);
+        int deletedRecrod =  mdb.delete(CHAT_TABLE, KEY_ID + "=" + id, null);
         Log.i("Deleted ",Integer.toString(deletedRecrod));
     }
 

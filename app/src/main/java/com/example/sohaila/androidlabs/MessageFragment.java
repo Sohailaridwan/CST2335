@@ -55,7 +55,7 @@ public class MessageFragment extends Fragment  {
 
         View view = inflater.inflate(R.layout.activity_message_fragment, container, false);
 
-        msgView = (TextView) view.findViewById(R.id.messageView);
+        msgView = (TextView) view.findViewById(R.id.message_text);
         msgView.setText(myMsg);
         idView = (TextView) view.findViewById(R.id.msgId);
         idView.setText(Integer.toString(myId));

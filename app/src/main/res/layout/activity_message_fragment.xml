@@ -8,7 +8,7 @@
 
     <TextView
 
-        android:id="@+id/messageView"
+        android:id="@+id/message_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,8 +20,8 @@
         android:id="@+id/msgId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/messageView"
-        android:layout_below="@+id/messageView"
+        android:layout_alignStart="@+id/message_text"
+        android:layout_below="@+id/message_text"
         android:text=" ID="
         android:textSize="20sp"
     />
