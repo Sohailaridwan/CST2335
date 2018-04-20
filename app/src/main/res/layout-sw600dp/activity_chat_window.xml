@@ -16,9 +16,8 @@
 
     <ListView
         android:id="@+id/chatlist"
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_height="match_parent"
-        android:layout_above="@+id/chat_edit_text"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 

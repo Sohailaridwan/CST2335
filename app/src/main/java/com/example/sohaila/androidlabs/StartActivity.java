@@ -13,6 +13,8 @@ public class StartActivity extends Activity {
 
     protected static final String ACTIVITY_NAME = "StartActivity";
     Button weatherButton;
+    Button toolBarButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,10 @@ public class StartActivity extends Activity {
             }
         });
         onClickWeather();
+        onClickTestToolBar();
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -95,4 +100,16 @@ public class StartActivity extends Activity {
                                          }
         );
     }
+    public void onClickTestToolBar(){
+        toolBarButton = (Button)findViewById(R.id.buttonTestToolBar);
+        toolBarButton.setOnClickListener(new View.OnClickListener(){
+                                              @Override
+                                              public void onClick(View v){
+                                                  Intent intent = new Intent(StartActivity.this, TestToolbar.class);
+                                                  startActivity(intent);
+                                              }
+                                          }
+        );
+    }
+
 }
